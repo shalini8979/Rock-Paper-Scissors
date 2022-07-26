@@ -1,0 +1,122 @@
+from tkinter import*
+
+from tkinter.font import Font
+
+import random
+root=Tk()
+root.title("GameTop")
+#root.iconbitmap("rock paper scissor.png")
+root.configure(bg="light grey")
+my_font = Font(family="Time New Roman",size=30,weight="bold",slant="italic",underline=1)
+lbl=Label(root,text="Rock Paper Scissor",font=my_font,fg="navy blue").place(x=400,y=80)
+root.geometry("500x500")
+
+rlbl=Label(root,text="Rock",fg="navy blue",bg="dark grey", padx="40" , pady="10").place(x=300,y=500)
+plbl=Label(root,text="Paper",fg="navy blue",bg="dark grey", padx="40" , pady="10").place(x=600,y=500)
+slbl=Label(root,text="Scissor",fg="navy blue",bg="dark grey", padx="40" , pady="10").place(x=900,y=500)
+
+
+click=True
+
+
+rockp=PhotoImage(file="rock_new(1).png")
+paperp=PhotoImage(file="fpaper(1)(1).png")
+scissorp=PhotoImage(file="fscissor(1).png")
+
+rock=PhotoImage(file="rock.png")
+paper=PhotoImage(file="paper(2).png")
+scissor=PhotoImage(file="scissor(2)(1).png")
+
+win=PhotoImage(file="youwin(1).png")
+loose=PhotoImage(file="youloose(2)(3).png")
+tie=PhotoImage(file="tie(1).png")
+
+rhandButton = ""
+phandButton =""
+shandButton =""
+
+def play():
+    global rhandButton,phandButton,shandButton
+
+    rhandButton = Button(root,image = rock,
+                        command = lambda:userPick("Rock"))
+    phandButton = Button(root,image = paper,
+                        command = lambda:userPick("Paper"))
+    shandButton = Button(root,image = scissor,
+                        command = lambda:userPick("Scissor"))
+
+    rhandButton.place(x=250,y=200)
+    phandButton.place(x=550,y=200)
+    shandButton.place(x=850,y=200)
+
+ 
+
+def computerPick():
+    choice = random.choice(["Rock","Paper","Scissor"])
+    return choice
+
+
+
+def userPick(userChoice):
+    global click
+
+    compPick = computerPick()
+
+    if click == True:
+        if userChoice == "Rock":
+            rhandButton.configure(image = rock)
+            if compPick == "Rock":
+                phandButton.configure(image=rockp)
+                shandButton.configure(image=tie)
+                click=False
+            elif compPick == "Paper":
+                phandButton.configure(image=paperp)
+                shandButton.configure(image=loose)
+                click=False
+            else:
+                phandButton.configure(image=scissorp)
+                shandButton.configure(image=win)
+                click=False
+
+        elif userChoice == "Paper":
+            phandButton.configure(image=paper)
+            if compPick == "Rock":
+                rhandButton.configure(image=rockp)
+                shandButton.configure(image=win)
+                click=False
+            elif compPick == "Paper":
+                rhandButton.configure(image=paperp)
+                shandButton.configure(image=tie)
+                click=False
+            else:
+                rhandButton.configure(image=scissorp)
+                shandButton.configure(image=loose)
+                click=False
+
+        elif userChoice == "Scissor":
+            phandButton.configure(image=paper)
+            if compPick == "Rock":
+                phandButton.configure(image=rockp)
+                rhandButton.configure(image=loose)
+                click=False
+            elif compPick == "Paper":
+                phandButton.configure(image=paperp)
+                rhandButton.configure(image=win)
+                click=False
+            else:
+                phandButton.configure(image=scissorp)
+                rhandButton.configure(image=tie)
+                click=False
+
+    else:
+        if userChoice == "Rock" or userChoice == "Paper" or userChoice == "Scissor":
+            rhandButton.configure(image = rock)
+            phandButton.configure(image = paper)
+            shandButton.configure(image = scissor)
+            click=True
+
+
+
+play()
+root.mainloop()
+
